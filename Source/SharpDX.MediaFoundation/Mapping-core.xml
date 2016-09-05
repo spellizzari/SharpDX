@@ -592,7 +592,7 @@
 
     <create class="ResultCode" visibility="public"/>
     <const from-macro="MF_E_(.*)" type="SharpDX.ResultDescriptor" cpp-type="int" name="$1" class="SharpDX.MediaFoundation.ResultCode" visibility="public static readonly">new SharpDX.ResultDescriptor($1, "$3", "$0", "$2")</const>
-    <const from-macro="MF_S_(.*)" type="SharpDX.ResultDescriptor" cpp-type="int" name="Success$1" class="SharpDX.MediaFoundation.ResultCode" visibility="public static readonly">new SharpDX.ResultDescriptor($1, "$3", "$0", "$2")</const>
+    <const from-macro="MF_S_(.*)" type="SharpDX.ResultDescriptor" cpp-type="int" name="SUCCESS_$1" class="SharpDX.MediaFoundation.ResultCode" visibility="public static readonly">new SharpDX.ResultDescriptor($1, "$3", "$0", "$2")</const>
 
     <create-cpp enum="MFASYNC_CALLBACK_FLAGS" macro="MFASYNC_.*_CALLBACK"/>
     <create-cpp enum="MFASYNC_CALLBACK_QUEUE" macro="MFASYNC_CALLBACK_QUEUE_.*"/>
