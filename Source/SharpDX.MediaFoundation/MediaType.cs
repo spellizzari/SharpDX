@@ -57,5 +57,22 @@ namespace SharpDX.MediaFoundation
             MediaFactory.CreateWaveFormatExFromMFMediaType(this, out waveFormat, out bufferSize, (int)flags);
             return WaveFormat.MarshalFrom(waveFormat);
         }
+
+        /// <summary>	
+        /// <p> Compares two media types and determines whether they are identical. If they are not identical, the method indicates how the two formats differ. </p>	
+        /// </summary>	
+        /// <param name="mediaType"><dd> <p>Pointer to the <strong><see cref="SharpDX.MediaFoundation.MediaType"/></strong> interface of the media type to compare.</p> </dd></param>	
+        /// <returns><p>The method returns an <strong><see cref="SharpDX.Result"/></strong>. Possible values include, but are not limited to, those in the following table.</p><table> <tr><th>Return code</th><th>Description</th></tr> <tr><td> <dl> <dt><strong>S_FALSE</strong></dt> </dl> </td><td> <p> The types are not equal. Examine the <em>pdwFlags</em> parameter to determine how the types differ. </p> </td></tr> <tr><td> <dl> <dt><strong><see cref="SharpDX.Result.Ok"/></strong></dt> </dl> </td><td> <p> The types are equal. </p> </td></tr> <tr><td> <dl> <dt><strong>E_INVALIDARG</strong></dt> </dl> </td><td> <p> One or both media types are invalid. </p> </td></tr> </table><p>?</p></returns>	
+        /// <remarks>	
+        /// <p> Both of the media types must have a major type, or the method returns <strong>E_INVALIDARG</strong>. </p><p> If the method succeeds and all of the comparison flags are set in <em>pdwFlags</em>, the return value is <strong><see cref="SharpDX.Result.Ok"/></strong>. If the method succeeds but one or more comparison flags are not set, the method returns <strong>S_FALSE</strong>. </p><p>This interface is available on the following platforms if the Windows Media Format 11 SDK redistributable components are installed:</p><ul> <li>Windows?XP with Service Pack?2 (SP2) and later.</li> <li>Windows?XP Media Center Edition?2005 with KB900325 (Windows?XP Media Center Edition?2005) and KB925766 (October 2006 Update Rollup for Windows?XP Media Center Edition) installed.</li> </ul>	
+        /// </remarks>	
+        /// <msdn-id>ms696980</msdn-id>	
+        /// <unmanaged>HRESULT IMFMediaType::IsEqual([In] IMFMediaType* pIMediaType,[Out] unsigned int* pdwFlags)</unmanaged>	
+        /// <unmanaged-short>IMFMediaType::IsEqual</unmanaged-short>	
+        public Result IsEqual(MediaType mediaType)
+        {
+            int flags;
+            return IsEqual(mediaType, out flags);
+        }
     }
 }

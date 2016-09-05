@@ -33,6 +33,18 @@ namespace SharpDX.MediaFoundation
             Utilities.CreateComInstance(guid, Utilities.CLSCTX.ClsctxInprocServer, Utilities.GetGuidFromType(typeof(Transform)), this);
         }
 
+        /// <summary>	
+        /// <p> Adds one or more new input streams to this Media Foundation transform (MFT). </p>	
+        /// </summary>	
+        /// <param name="streamIDs"><dd> <p> Array of stream identifiers. The new stream identifiers must not match any existing input streams. </p> </dd></param>	
+        /// <msdn-id>ms696211</msdn-id>	
+        /// <unmanaged>HRESULT IMFTransform::AddInputStreams([In] unsigned int cStreams,[Buffer] unsigned int* adwStreamIDs)</unmanaged>	
+        /// <unmanaged-short>IMFTransform::AddInputStreams</unmanaged-short>	
+        public void AddInputStreams(int[] streamIDs)
+        {
+            AddInputStreams(streamIDs?.Length ?? 0, streamIDs);
+        }
+
         /// <summary>
         /// Gets the stream identifiers for the input and output streams on this Media Foundation transform (MFT).
         /// </summary>
@@ -104,7 +116,7 @@ namespace SharpDX.MediaFoundation
             var result = ProcessOutput(dwFlags, outputSamplesRef.Length, outputSamplesRef[0], out dwStatusRef);
 
             // Check if it needs more input
-            if (result== ResultCode.TransformNeedMoreInput)
+            if (result == ResultCode.TransformNeedMoreInput)
             {
                 needMoreInput = true;
             }

@@ -26,6 +26,7 @@
     <Compile Include="ClockStateSinkShadow.cs" />
     <Compile Include="MediaTypeHandler.cs" />
     <Compile Include="PresentationDescriptor.cs" />
+    <Compile Include="Sample.cs" />
     <Compile Include="SampleGrabberSinkCallbackShadow2.cs" />
     <Compile Include="SampleGrabberSinkCallback2.cs" />
     <Compile Include="DXGIDeviceManager.cs" />
