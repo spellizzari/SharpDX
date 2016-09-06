@@ -59,6 +59,7 @@
     <Compile Include="ServiceProvider.cs" />
     <Compile Include="SourceReader.cs" />
     <Compile Include="SourceResolver.cs" />
+    <Compile Include="TrackedSample.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="VideoFormatGuids.cs" />
     <Compile Include="VideoPresenter.cs" />
@@ -114,7 +115,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DirectX\Mapping.xml" />
+  </ItemGroup>
   <Import Project="$(SolutionDir)\Build\SharpDX.PostSettings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

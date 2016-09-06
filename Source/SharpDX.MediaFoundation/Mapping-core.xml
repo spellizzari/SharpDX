@@ -1012,6 +1012,9 @@
     <map method="IMFSample::SetSampleTime" visibility="internal" />
     <map method="IMFSample::SetSampleDuration" visibility="internal" />
 
+    <map method="IMFTrackedSample::SetAllocator" visibility="internal" />
+    <map param="IMFTrackedSample::SetAllocator::pUnkState" type="void" />
+
     <ifdef name="STORE_APP">
       <remove function="MFCheckContentProtectionDevice" />
       <remove function="MFCreateContentDecryptorContext" />
