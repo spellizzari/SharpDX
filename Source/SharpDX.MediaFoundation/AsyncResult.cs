@@ -26,7 +26,9 @@ namespace SharpDX.MediaFoundation
     public partial class AsyncResult
     {
         private object state;
+        private IntPtr statePointer;
         private bool isStateVerified;
+        private bool isStatePointerVerified;
 
         /// <summary>
         /// Gets the state object specified by the caller in the asynchronous <strong>Begin</strong> method. If the value is not <strong><c>null</c></strong>, the caller must dispose.
@@ -42,6 +44,7 @@ namespace SharpDX.MediaFoundation
         {
             get
             {
+                if (isStatePointerVerified) throw new InvalidOperationException();
                 if (!isStateVerified)
                 {
                     IntPtr statePtr;
@@ -54,6 +57,30 @@ namespace SharpDX.MediaFoundation
                     isStateVerified = true;
                 }
                 return state;
+            }
+        }
+
+        /// <summary>
+        /// Gets the state object specified by the caller in the asynchronous <strong>Begin</strong> method. If the value is not <strong><c>null</c></strong>, the caller must dispose.
+        /// </summary>
+        /// <value>The state.</value>
+        /// <remarks>	
+        /// <p>The caller of the asynchronous method specifies the state object, and can use it for any caller-defined purpose. The state object can be <strong><c>null</c></strong>. If the state object is <strong><c>null</c></strong>, <strong>GetState</strong> returns <strong>E_POINTER</strong>.</p><p>If you are implementing an asynchronous method, set the state object on the through the <em>punkState</em> parameter of the <strong><see cref="SharpDX.MediaFoundation.MediaFactory.CreateAsyncResult"/></strong> function.</p><p>This interface is available on the following platforms if the Windows Media Format 11 SDK redistributable components are installed:</p><ul> <li>Windows?XP with Service Pack?2 (SP2) and later.</li> <li>Windows?XP Media Center Edition?2005 with KB900325 (Windows?XP Media Center Edition?2005) and KB925766 (October 2006 Update Rollup for Windows?XP Media Center Edition) installed.</li> </ul>	
+        /// </remarks>	
+        /// <msdn-id>bb970576</msdn-id>	
+        /// <unmanaged>HRESULT IMFAsyncResult::GetState([Out] IUnknown** ppunkState)</unmanaged>	
+        /// <unmanaged-short>IMFAsyncResult::GetState</unmanaged-short>	
+        public IntPtr StatePointer
+        {
+            get
+            {
+                if (isStateVerified) throw new InvalidOperationException();
+                if (!isStatePointerVerified)
+                {
+                    GetState(out statePointer);
+                    isStatePointerVerified = true;
+                }
+                return statePointer;
             }
         }
 
