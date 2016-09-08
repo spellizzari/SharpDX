@@ -1658,9 +1658,9 @@ namespace SharpDX.MediaFoundation.DirectX {
     /// <msdn-id>aa473831</msdn-id>	
     /// <unmanaged>DXVA2_Fixed32</unmanaged>	
     /// <unmanaged-short>DXVA2_Fixed32</unmanaged-short>	
-    [StructLayout(LayoutKind.Sequential, Pack = 0 )]
-    public  partial struct Fixed32 {	
-        
+    [StructLayout(LayoutKind.Explicit, Pack = 0 )]
+    public  partial struct Fixed32 {
+
         /// <summary>	
         /// No documentation.	
         /// </summary>	
@@ -1668,8 +1668,9 @@ namespace SharpDX.MediaFoundation.DirectX {
         /// <msdn-id>aa473831</msdn-id>	
         /// <unmanaged>unsigned short Fraction</unmanaged>	
         /// <unmanaged-short>unsigned short Fraction</unmanaged-short>	
-        public short Fraction;
-        
+        [FieldOffset(0)]
+        public ushort Fraction;
+
         /// <summary>	
         /// No documentation.	
         /// </summary>	
@@ -1677,8 +1678,9 @@ namespace SharpDX.MediaFoundation.DirectX {
         /// <msdn-id>aa473831</msdn-id>	
         /// <unmanaged>short Value</unmanaged>	
         /// <unmanaged-short>short Value</unmanaged-short>	
+        [FieldOffset(2)]
         public short Value;
-        
+
         /// <summary>	
         /// No documentation.	
         /// </summary>	
@@ -1686,6 +1688,7 @@ namespace SharpDX.MediaFoundation.DirectX {
         /// <msdn-id>aa473831</msdn-id>	
         /// <unmanaged>int ll</unmanaged>	
         /// <unmanaged-short>int ll</unmanaged-short>	
+        [FieldOffset(0)]
         public int Ll;
     }
     
