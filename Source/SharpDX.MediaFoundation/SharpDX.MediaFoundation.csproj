@@ -22,8 +22,10 @@
     <Compile Include="AudioDecoder.cs" />
     <Compile Include="ByteStream.cs" />
     <Compile Include="AsyncCallbackShadow.cs" />
+    <Compile Include="Clock.cs" />
     <Compile Include="ClockStateSink.cs" />
     <Compile Include="ClockStateSinkShadow.cs" />
+    <Compile Include="MediaEventSink.cs" />
     <Compile Include="MediaTypeHandler.cs" />
     <Compile Include="PresentationDescriptor.cs" />
     <Compile Include="Sample.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="VideoFormatGuids.cs" />
     <Compile Include="VideoPresenter.cs" />
     <Compile Include="VideoPresenterShadow.cs" />
+    <Compile Include="VideoRenderer.cs" />
     <Compile Include="WorkQueueId.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(SharpDXPlatform)' == 'Desktop'">

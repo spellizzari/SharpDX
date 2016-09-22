@@ -717,30 +717,40 @@
     <map param="IMFAttributes::Compare::pbResult" return="true"/>
 
     <map method="IMFAttributes::GetUINT32" visibility="internal"/>
-    <map method="IMFAttributes::GetUINT32" name="GetInt"/>
-    <map param="IMFAttributes::GetUINT32::punValue" return="true"/>
+    <map method="IMFAttributes::GetUINT32" name="GetInt" />
+    <map method="IMFAttributes::GetUINT32" check="false" />
+    <!--<map param="IMFAttributes::GetUINT32::punValue" return="true"/>-->
 
     <map method="IMFAttributes::GetUINT64" visibility="internal"/>
     <map method="IMFAttributes::GetUINT64" name="GetLong"/>
-    <map param="IMFAttributes::GetUINT64::punValue" return="true"/>
+    <map method="IMFAttributes::GetUINT64" check="false" />
+    <!--<map param="IMFAttributes::GetUINT64::punValue" return="true"/>-->
 
     <map method="IMFAttributes::GetDouble" visibility="internal"/>
     <map method="IMFAttributes::GetGUID" visibility="internal"/>
-    <map param="IMFAttributes::GetDouble::pfValue" return="true"/>
-    <map param="IMFAttributes::GetGUID::pguidValue" return="true"/>
+    <map method="IMFAttributes::GetDouble" check="false" />
+    <map method="IMFAttributes::GetGUID" check="false" />
+    <!--<map param="IMFAttributes::GetDouble::pfValue" return="true"/>-->
+    <!--<map param="IMFAttributes::GetGUID::pguidValue" return="true"/>-->
 
     <map method="IMFAttributes::GetString.*" visibility="internal"/>
     <map method="IMFAttributes::GetAllocatedString" visibility="internal"/>
-    <map param="IMFAttributes::GetStringLength::pcchLength" return="true"/>
+    <map method="IMFAttributes::GetAllocatedString" check="false" />
+    <!--<map param="IMFAttributes::GetStringLength::pcchLength" return="true"/>-->
+    <map method="IMFAttributes::GetStringLength" check="false" />
+    <map method="IMFAttributes::GetString" check="false" />
 
     <map method="IMFAttributes::GetBlob.*" visibility="internal"/>
     <map method="IMFAttributes::GetAllocatedBlob" visibility="internal"/>
     <map param="IMFAttributes::GetBlob::pBuf" type="void" attribute="in"/>
-    <map param="IMFAttributes::GetBlobSize::pcbBlobSize" return="true"/>
+    <map method="IMFAttributes::GetBlob" check="false" />
+      <map method="IMFAttributes::GetBlobSize" check="false" />
+    <!--<map param="IMFAttributes::GetBlobSize::pcbBlobSize" return="true"/>-->
     <map method="IMFAttributes::SetBlob"    visibility="internal" />
     <map param="IMFAttributes::SetBlob::pBuf" type="void" attribute="in"/>
 
     <map method="IMFAttributes::GetUnknown" visibility="internal"/>
+    <map method="IMFAttributes::GetUnknown" check="false" />
 
     <map method="IMFAttributes::SetItem"    name="Set" visibility="internal" />
     <map method="IMFAttributes::SetUINT32"  name="Set" visibility="internal" />
@@ -998,7 +1008,8 @@
     <map method="IMFTransform::AddInputStreams" visibility="internal" check ="false"/>
     <map param="IMFTransform::AddInputStreams::adwStreamIDs" attribute="buffer"/>
 
-    <map method="IMFTransform::GetOutputAvailableType" visibility="internal" check ="false"/>
+    <map method="IMFTransform::SetOutputType" check ="false"/>
+    <map method="IMFTransform::GetOutputAvailableType" check ="false"/>
 
     <map method="IMFTransform::ProcessOutput" visibility="internal" check ="false"/>
     <map param="IMFTransform::ProcessOutput::dwFlags" type="_MFT_PROCESS_OUTPUT_FLAGS"/>
@@ -1014,6 +1025,8 @@
 
     <map method="IMFTrackedSample::SetAllocator" visibility="internal" />
     <map param="IMFTrackedSample::SetAllocator::pUnkState" type="void" />
+
+    <map method="IMFTopologyServiceLookup::LookupService" check="false" />
 
     <ifdef name="STORE_APP">
       <remove function="MFCheckContentProtectionDevice" />

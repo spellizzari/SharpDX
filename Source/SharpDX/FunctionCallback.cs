@@ -43,7 +43,7 @@ namespace SharpDX
 
         public static explicit operator IntPtr(FunctionCallback value)
         {
-            return value.Pointer;
+            return value?.Pointer ?? IntPtr.Zero;
         }
 
         public static implicit operator FunctionCallback(IntPtr value)
@@ -53,7 +53,7 @@ namespace SharpDX
 
         public unsafe static implicit operator void*(FunctionCallback value)
         {
-            return (void*)value.Pointer;
+            return (void*)(value?.Pointer ?? IntPtr.Zero);
         }
 
         public static unsafe explicit operator FunctionCallback(void* value)

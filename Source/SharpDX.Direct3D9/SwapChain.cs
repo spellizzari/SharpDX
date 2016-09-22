@@ -118,5 +118,5 @@ namespace SharpDX.Direct3D9
                 Present(srcPtr, destPtr, windowOverride, dirtyRegionRGNData, (int)flags);
             }
         }
-    }
+   }
 }

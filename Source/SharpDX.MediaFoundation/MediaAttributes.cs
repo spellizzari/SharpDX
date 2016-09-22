@@ -100,7 +100,7 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms704598</msdn-id>	
         /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
         /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
-        public unsafe T Get<T>(System.Guid guidKey)
+        public unsafe bool TryGet<T>(System.Guid guidKey, out T value)
         {
             // Perform conversions to supported types
             // int
@@ -113,78 +113,247 @@ namespace SharpDX.MediaFoundation
 
             if (typeof(T) == typeof(int) || typeof(T) == typeof(bool) || typeof(T) == typeof(byte) || typeof(T) == typeof(uint) || typeof(T) == typeof(short) || typeof(T) == typeof(ushort) || typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
             {
-                return (T)Convert.ChangeType(GetInt(guidKey), typeof(T));
+                int coreValue;
+                var hr = GetInt(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)Convert.ChangeType(coreValue, typeof(T));
+                return true;
             }
 
-            if (typeof(T).GetTypeInfo().IsEnum )
+            if (typeof(T).GetTypeInfo().IsEnum)
             {
-                return (T)Enum.ToObject(typeof(T), GetInt(guidKey));
+                int coreValue;
+                var hr = GetInt(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)Enum.ToObject(typeof(T), coreValue);
+                return true;
             }
 
             if (typeof(T) == typeof(IntPtr))
             {
-                return (T)(object)new IntPtr(GetLong(guidKey));
+                long coreValue;
+                var hr = GetLong(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)(object)new IntPtr(coreValue);
+                return true;
             }
 
             if (typeof(T) == typeof(long) || typeof(T) == typeof(ulong))
             {
-                return (T)Convert.ChangeType(GetLong(guidKey), typeof(T));
+                long coreValue;
+                var hr = GetLong(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)Convert.ChangeType(coreValue, typeof(T));
+                return true;
             }
 
             if (typeof(T) == typeof(System.Guid))
             {
-                return (T)(object)GetGUID(guidKey);
+                Guid coreValue;
+                var hr = GetGUID(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)(object)coreValue;
+                return true;
             }
 
             if (typeof(T) == typeof(string))
             {
-                int length = GetStringLength(guidKey);
+                int length;
+                var hr = GetStringLength(guidKey, out length);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
                 char* wstr = stackalloc char[length + 1];
-                GetString(guidKey, new IntPtr(wstr), length + 1, IntPtr.Zero);
-                return (T)(object)Marshal.PtrToStringUni(new IntPtr(wstr));
+                hr = GetString(guidKey, new IntPtr(wstr), length + 1, IntPtr.Zero);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)(object)Marshal.PtrToStringUni(new IntPtr(wstr));
+                return true;
             }
 
             if (typeof(T) == typeof(double) || typeof(T) == typeof(float))
             {
-                return (T)Convert.ChangeType(GetDouble(guidKey), typeof(T));
+                double coreValue;
+                var hr = GetDouble(guidKey, out coreValue);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)Convert.ChangeType(coreValue, typeof(T));
+                return true;
             }
 
             if (typeof(T) == typeof(byte[]))
             {
-                int length = GetBlobSize(guidKey);
+                int length;
+                var hr = GetBlobSize(guidKey, out length);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
                 var buffer = new byte[length];
-                fixed (void *pBuffer = buffer)
-                    GetBlob(guidKey, (IntPtr)pBuffer, buffer.Length, IntPtr.Zero);
-                return (T)(object)buffer;
+                fixed (void* pBuffer = buffer)
+                {
+                    hr = GetBlob(guidKey, (IntPtr)pBuffer, buffer.Length, IntPtr.Zero);
+                    if (hr == ResultCode.Attributenotfound)
+                    {
+                        value = default(T);
+                        return false;
+                    }
+                    hr.CheckError();
+                }
+                value = (T)(object)buffer;
+                return true;
             }
 
             if (typeof(T).GetTypeInfo().IsValueType)
             {
-                int length = GetBlobSize(guidKey);
-                if ( length != SharpDX.Interop.SizeOf<T>())
+                int length;
+                var hr = GetBlobSize(guidKey, out length);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                if (length != SharpDX.Interop.SizeOf<T>())
                 {
                     throw new ArgumentException("Size of the structure doesn't match the size of stored value");
                 }
-                var value = default(T);
-                GetBlob(guidKey, (IntPtr)Interop.Fixed(ref value), SharpDX.Interop.SizeOf<T>(), IntPtr.Zero);
-                return value;
+                value = default(T);
+                hr = GetBlob(guidKey, (IntPtr)Interop.Fixed(ref value), SharpDX.Interop.SizeOf<T>(), IntPtr.Zero);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                return true;
             }
 
             if (typeof(T) == typeof(ComObject))
             {
                 IntPtr ptr;
-                GetUnknown(guidKey, Utilities.GetGuidFromType(typeof(IUnknown)), out ptr);
-                return (T)(object)new ComObject(ptr);
+                var hr = GetUnknown(guidKey, Utilities.GetGuidFromType(typeof(IUnknown)), out ptr);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = (T)(object)new ComObject(ptr);
+                return true;
             }
 
             if (typeof(T).GetTypeInfo().IsSubclassOf(typeof(ComObject)))
             {
                 IntPtr ptr;
-                GetUnknown(guidKey, Utilities.GetGuidFromType(typeof(T)), out ptr);
-                return AsUnsafe<T>(ptr);
+                var hr = GetUnknown(guidKey, Utilities.GetGuidFromType(typeof(T)), out ptr);
+                if (hr == ResultCode.Attributenotfound)
+                {
+                    value = default(T);
+                    return false;
+                }
+                hr.CheckError();
+                value = AsUnsafe<T>(ptr);
+                return true;
             }
 
             throw new ArgumentException("The type of the value is not supported");
+        }
+
+        /// <summary>	
+        /// Gets an item value
+        /// </summary>	
+        /// <param name="guidKey">GUID of the key.</param>	
+        /// <returns>The value associated to this key.</returns>	
+        /// <msdn-id>ms704598</msdn-id>	
+        /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
+        /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
+        public unsafe T Get<T>(System.Guid guidKey)
+        {
+            T value;
+            if (!TryGet<T>(guidKey, out value))
+                throw new SharpDXException(ResultCode.Attributenotfound);
+            return value;
+        }
+
+        /// <summary>	
+        /// Gets an item value
+        /// </summary>	
+        /// <param name="guidKey">GUID of the key.</param>	
+        /// <returns>The value associated to this key.</returns>	
+        /// <msdn-id>ms704598</msdn-id>	
+        /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
+        /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
+        public unsafe T TryGet<T>(System.Guid guidKey, T defaultValue)
+        {
+            T value;
+            if (!TryGet<T>(guidKey, out value))
+                return defaultValue;
+            return value;
+        }
+
+        /// <summary>	
+        /// Gets an item value
+        /// </summary>	
+        /// <param name="guidKey">GUID of the key.</param>	
+        /// <returns>The value associated to this key.</returns>	
+        /// <msdn-id>ms704598</msdn-id>	
+        /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
+        /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
+        public unsafe bool TryGet<T>(MediaAttributeKey<T> guidKey, out T value)
+        {
+            return TryGet<T>(guidKey.Guid, out value);
+        }
+
+        /// <summary>	
+        /// Gets an item value
+        /// </summary>	
+        /// <param name="guidKey">GUID of the key.</param>	
+        /// <returns>The value associated to this key.</returns>	
+        /// <msdn-id>ms704598</msdn-id>	
+        /// <unmanaged>HRESULT IMFAttributes::GetItem([In] const GUID&amp; guidKey,[In] void* pValue)</unmanaged>	
+        /// <unmanaged-short>IMFAttributes::GetItem</unmanaged-short>	
+        public unsafe T TryGet<T>(MediaAttributeKey<T> guidKey, T defaultValue)
+        {
+            return TryGet<T>(guidKey.Guid, defaultValue);
         }
 
         /// <summary>	
