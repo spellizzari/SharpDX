@@ -61,6 +61,7 @@
     <Compile Include="ServiceProvider.cs" />
     <Compile Include="SourceReader.cs" />
     <Compile Include="SourceResolver.cs" />
+    <Compile Include="TopologyNode.cs" />
     <Compile Include="TrackedSample.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="VideoFormatGuids.cs" />
