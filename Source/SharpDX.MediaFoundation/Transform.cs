@@ -108,19 +108,14 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms704814</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::GetInputAvailableType([In] unsigned int dwInputStreamID,[In] unsigned int dwTypeIndex,[Out] IMFMediaType** ppType)</unmanaged>	
         /// <unmanaged-short>IMFTransform::GetInputAvailableType</unmanaged-short>	
-        public bool TryGetInputAvailableType(int dwInputStreamID, int dwTypeIndex, out SharpDX.MediaFoundation.MediaType typeOut)
+        public Result TryGetInputAvailableType(int dwInputStreamID, int dwTypeIndex, out SharpDX.MediaFoundation.MediaType typeOut)
         {
             unsafe
             {
                 IntPtr typeOut_ = IntPtr.Zero;
                 var result = (Result)LocalInterop.Calliint(_nativePointer, dwInputStreamID, dwTypeIndex, &typeOut_, ((void**)(*(void**)_nativePointer))[13]);
                 typeOut = (typeOut_ == IntPtr.Zero) ? null : new SharpDX.MediaFoundation.MediaType(typeOut_);
-                if (result.Success)
-                    return true;
-                if (result == ResultCode.NoMoreTypes)
-                    return false;
-                result.CheckError();
-                return false;
+                return result;
             }
         }
 
@@ -137,23 +132,17 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms703812</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::GetOutputAvailableType([In] unsigned int dwOutputStreamID,[In] unsigned int dwTypeIndex,[Out] IMFMediaType** ppType)</unmanaged>	
         /// <unmanaged-short>IMFTransform::GetOutputAvailableType</unmanaged-short>	
-        public bool TryGetOutputAvailableType(int dwOutputStreamID, int dwTypeIndex, out SharpDX.MediaFoundation.MediaType typeOut)
+        public Result TryGetOutputAvailableType(int dwOutputStreamID, int dwTypeIndex, out SharpDX.MediaFoundation.MediaType typeOut)
         {
             unsafe
             {
                 IntPtr typeOut_ = IntPtr.Zero;
                 var result = (Result)LocalInterop.Calliint(_nativePointer, dwOutputStreamID, dwTypeIndex, &typeOut_, ((void**)(*(void**)_nativePointer))[14]);
                 typeOut = (typeOut_ == IntPtr.Zero) ? null : new SharpDX.MediaFoundation.MediaType(typeOut_);
-                if (result.Success)
-                    return true;
-                if (result == ResultCode.NoMoreTypes)
-                    return false;
-                result.CheckError();
-                return false;
+                return result;
             }
         }
 
-        /*
         /// <summary>	
         /// <p> Sets, tests, or clears the media type for an input stream on this Media Foundation transform (MFT). </p>	
         /// </summary>	
@@ -167,14 +156,13 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms700113</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::SetInputType([In] unsigned int dwInputStreamID,[In, Optional] IMFMediaType* pType,[In] unsigned int dwFlags)</unmanaged>	
         /// <unmanaged-short>IMFTransform::SetInputType</unmanaged-short>	
-        public void SetInputType(int dwInputStreamID, SharpDX.MediaFoundation.MediaType typeRef, int dwFlags)
+        public Result TrySetInputType(int dwInputStreamID, SharpDX.MediaFoundation.MediaType typeRef, int dwFlags)
         {
             unsafe
             {
-                SharpDX.Result __result__;
-                __result__ =
-                SharpDX.MediaFoundation.LocalInterop.Calliint(_nativePointer, dwInputStreamID, (void*)((typeRef == null) ? IntPtr.Zero : typeRef.NativePointer), dwFlags, ((void**)(*(void**)_nativePointer))[15]);
-                __result__.CheckError();
+                Result result;
+                result = LocalInterop.Calliint(_nativePointer, dwInputStreamID, (void*)((typeRef == null) ? IntPtr.Zero : typeRef.NativePointer), dwFlags, ((void**)(*(void**)_nativePointer))[15]);
+                return result;
             }
         }
 
@@ -188,21 +176,18 @@ namespace SharpDX.MediaFoundation
         /// <remarks>	
         /// <p>This method can be used to set, test without setting, or clear the media type:</p><ul> <li> To set the media type, set <em>dwFlags</em> to zero and set <em>pType</em> to a non-<strong><c>null</c></strong> reference that specifies the media type. </li> <li> To test the media type without setting it, set <em>dwFlags</em> to <strong><see cref="SharpDX.MediaFoundation.MftSetTypeFlags.MftSetTypeTestOnly"/></strong> and set <em>pType</em> to a non-<strong><c>null</c></strong> reference that specifies the media type. If the media type is acceptable, the method return <strong><see cref="SharpDX.Result.Ok"/></strong>. Otherwise, it returns <strong><see cref="SharpDX.MediaFoundation.ResultCode.InvalidMediaType"/></strong>. Regardless of the return value, the current media type does not change. </li> <li> To clear the media type, set <em>pType</em> to <strong><c>null</c></strong>. </li> </ul><p> Setting the media type on one stream may change the acceptable types on another stream. </p><p> An MFT may require the caller to set one or more input types before setting the output type. If so, the method returns <strong><see cref="SharpDX.MediaFoundation.ResultCode.TransformTypeNotSet"/></strong>. </p><p>If the MFT supports DirectX Video Acceleration (DXVA) but is unable to find a suitable DXVA configuration (for example, if the graphics driver does not have the right capabilities), the method should return <strong><see cref="SharpDX.MediaFoundation.ResultCode.UnsupportedD3DType"/></strong>. For more information, see Supporting DXVA 2.0 in Media Foundation.</p><p>If <strong>MFT_UNIQUE_METHOD_NAMES</strong> is defined before including mftransform.h, this method is renamed <strong>MFTSetOutputType</strong>. See Creating Hybrid DMO/MFT Objects.</p>	
         /// </remarks>	
-        /// <include file='.\..\Documentation\CodeComments.xml' path="/comments/comment[@id='IMFTransform::SetOutputType']/*"/>	
         /// <msdn-id>ms702016</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::SetOutputType([In] unsigned int dwOutputStreamID,[In, Optional] IMFMediaType* pType,[In] unsigned int dwFlags)</unmanaged>	
         /// <unmanaged-short>IMFTransform::SetOutputType</unmanaged-short>	
-        public SharpDX.Result SetOutputType(int dwOutputStreamID, SharpDX.MediaFoundation.MediaType typeRef, int dwFlags)
+        public Result TrySetOutputType(int dwOutputStreamID, SharpDX.MediaFoundation.MediaType typeRef, int dwFlags)
         {
             unsafe
             {
-                SharpDX.Result __result__;
-                __result__ =
-                SharpDX.MediaFoundation.LocalInterop.Calliint(_nativePointer, dwOutputStreamID, (void*)((typeRef == null) ? IntPtr.Zero : typeRef.NativePointer), dwFlags, ((void**)(*(void**)_nativePointer))[16]);
-                return __result__;
+                Result result;
+                result = LocalInterop.Calliint(_nativePointer, dwOutputStreamID, (void*)((typeRef == null) ? IntPtr.Zero : typeRef.NativePointer), dwFlags, ((void**)(*(void**)_nativePointer))[16]);
+                return result;
             }
         }
-        */
 
         /// <summary>	
         /// <p> Gets the current media type for an input stream on this Media Foundation transform (MFT). </p>	
@@ -217,19 +202,14 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms705607</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::GetInputCurrentType([In] unsigned int dwInputStreamID,[Out] IMFMediaType** ppType)</unmanaged>	
         /// <unmanaged-short>IMFTransform::GetInputCurrentType</unmanaged-short>	
-        public bool TryGetInputCurrentType(int dwInputStreamID, out SharpDX.MediaFoundation.MediaType typeOut)
+        public Result TryGetInputCurrentType(int dwInputStreamID, out SharpDX.MediaFoundation.MediaType typeOut)
         {
             unsafe
             {
                 IntPtr typeOut_ = IntPtr.Zero;
                 var result = (Result)LocalInterop.Calliint(_nativePointer, dwInputStreamID, &typeOut_, ((void**)(*(void**)_nativePointer))[17]);
                 typeOut = (typeOut_ == IntPtr.Zero) ? null : new MediaType(typeOut_);
-                if (result.Success)
-                    return true;
-                if (result == ResultCode.TransformTypeNotSet)
-                    return false;
-                result.CheckError();
-                return false;
+                return result;
             }
         }
 
@@ -246,20 +226,14 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>ms696985</msdn-id>	
         /// <unmanaged>HRESULT IMFTransform::GetOutputCurrentType([In] unsigned int dwOutputStreamID,[Out] IMFMediaType** ppType)</unmanaged>	
         /// <unmanaged-short>IMFTransform::GetOutputCurrentType</unmanaged-short>	
-        public bool TryGetOutputCurrentType(int dwOutputStreamID, out MediaType typeOut)
+        public Result TryGetOutputCurrentType(int dwOutputStreamID, out MediaType typeOut)
         {
             unsafe
             {
                 IntPtr typeOut_ = IntPtr.Zero;
                 var result = (Result)LocalInterop.Calliint(_nativePointer, dwOutputStreamID, &typeOut_, ((void**)(*(void**)_nativePointer))[18]);
                 typeOut = (typeOut_ == IntPtr.Zero) ? null : new MediaType(typeOut_);
-                result.CheckError();
-                if (result.Success)
-                    return true;
-                if (result == ResultCode.TransformTypeNotSet)
-                    return false;
-                result.CheckError();
-                return false;
+                return result;
             }
         }
     }

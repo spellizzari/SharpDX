@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+
 namespace SharpDX.MediaFoundation.DirectX
 {
     /// <summary>	
@@ -48,6 +50,33 @@ namespace SharpDX.MediaFoundation.DirectX
         public HDDevice(SharpDX.Direct3D9.DeviceEx device, ContentDescription contentDescription, DeviceUsage usage)
         {
             DXVAFactory.CreateDevice(device, ref contentDescription, usage, null, this);
+        }
+
+        /// <summary>Initializes an instance of the <see cref="HDDevice"/> class.</summary>
+        private HDDevice()
+        {
+        }
+
+        /// <summary>	
+        /// <p><strong>Applies to: </strong>desktop apps only</p><p>Creates a Microsoft DirectX Video Acceleration High Definition (DXVA-HD) device.</p>	
+        /// </summary>	
+        /// <param name="device"><dd> <p>A reference to the <strong><see cref="SharpDX.Direct3D9.DeviceEx"/></strong> interface of a Direct3D 9 device.</p> </dd></param>	
+        /// <param name="contentDescription"><dd> <p>A reference to a <strong><see cref="SharpDX.MediaFoundation.DirectX.ContentDescription"/></strong> structure that describes the video content. The driver uses this information as a hint when it creates the device.</p> </dd></param>	
+        /// <param name="usage"><dd> <p>A member of the <strong><see cref="SharpDX.MediaFoundation.DirectX.DeviceUsage"/></strong> enumeration, describing how the device will be used. The value indicates the desired trade-off between speed and video quality. The driver uses this flag as a hint when it creates the device.</p> </dd></param>	
+        /// <remarks>	
+        /// <p> Use the <strong><see cref="SharpDX.MediaFoundation.DirectX.HDDevice"/></strong> interface to get the device capabilities, create the video processor, and allocate video surfaces. </p>	
+        /// </remarks>	
+        /// <include file='..\Documentation\CodeComments.xml' path="/comments/comment[@id='DXVAHD_CreateDevice']/*"/>	
+        /// <msdn-id>dd318412</msdn-id>	
+        /// <unmanaged>HRESULT DXVAHD_CreateDevice([In] IDirect3DDevice9Ex* pD3DDevice,[In] const DXVAHD_CONTENT_DESC* pContentDesc,[In] DXVAHD_DEVICE_USAGE Usage,[In, Optional] __function__stdcall* pPlugin,[Out, Fast] IDXVAHD_Device** ppDevice)</unmanaged>	
+        /// <unmanaged-short>DXVAHD_CreateDevice</unmanaged-short>	
+        public static Result TryCreate(SharpDX.Direct3D9.DeviceEx device, ContentDescription contentDescription, DeviceUsage usage, out HDDevice hdDevice)
+        {
+            hdDevice = new HDDevice();
+            var result = DXVAFactory.TryCreateDevice(device, ref contentDescription, usage, null, hdDevice);
+            if (result.Failure)
+                hdDevice = null;
+            return result;
         }
     }
 }

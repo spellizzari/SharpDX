@@ -1026,6 +1026,8 @@
     <map method="IMFTrackedSample::SetAllocator" visibility="internal" />
     <map param="IMFTrackedSample::SetAllocator::pUnkState" type="void" />
 
+    <map method="IMFActivate::ActivateObject" name="InternalActivateObject" visibility="internal" check="false" />
+      
     <map method="IMFTopologyServiceLookup::LookupService" check="false" />
 
     <ifdef name="STORE_APP">

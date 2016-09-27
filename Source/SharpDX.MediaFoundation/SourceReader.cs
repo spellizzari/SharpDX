@@ -327,6 +327,32 @@ namespace SharpDX.MediaFoundation
             return GetPresentationAttribute((int)dwStreamIndex, guidAttribute);
         }
 
+        /// <summary>	
+        /// <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p>Gets a format that is supported natively by the media source.</p>	
+        /// </summary>	
+        /// <param name="dwStreamIndex"><dd> <p>Specifies which stream to query. The value can be any of the following.</p> <table> <tr><th>Value</th><th>Meaning</th></tr> <tr><td> <dl> <dt>0?0xFFFFFFFB</dt> </dl> </td><td> <p>The zero-based index of a stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstVideoStream"/></strong></strong></dt> <dt>0xFFFFFFFC</dt> </dl> </td><td> <p>The first video stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstAudioStream"/></strong></strong></dt> <dt>0xFFFFFFFD</dt> </dl> </td><td> <p>The first audio stream.</p> </td></tr> </table> <p>?</p> </dd></param>	
+        /// <param name="dwMediaTypeIndex"><dd> <p>The zero-based index of the media type to retrieve.</p> </dd></param>	
+        /// <returns><dd> <p>Receives a reference to the <strong><see cref="SharpDX.MediaFoundation.MediaType"/></strong> interface. The caller must release the interface.</p> </dd></returns>	
+        /// <remarks>	
+        /// <p>This method queries the underlying media source for its native output format. Potentially, each source stream can produce more than one output format. Use the <em>dwMediaTypeIndex</em> parameter to loop through the available formats. Generally, file sources offer just one format per stream, but capture devices might offer several formats.</p><p> The method returns a copy of the media type, so it is safe to modify the object received in the <em> ppMediaType</em> parameter.</p><p>To set  the output type for a stream, call the <strong><see cref="SharpDX.MediaFoundation.SourceReader.SetCurrentMediaType"/></strong> method.</p><p>This interface is available on Windows?Vista if Platform Update Supplement for Windows?Vista is installed.</p>	
+        /// </remarks>	
+        /// <msdn-id>dd374661</msdn-id>	
+        /// <unmanaged>HRESULT IMFSourceReader::GetNativeMediaType([In] unsigned int dwStreamIndex,[In] unsigned int dwMediaTypeIndex,[Out] IMFMediaType** ppMediaType)</unmanaged>	
+        /// <unmanaged-short>IMFSourceReader::GetNativeMediaType</unmanaged-short>	
+        public SharpDX.MediaFoundation.MediaType TryGetNativeMediaType(int dwStreamIndex, int dwMediaTypeIndex)
+        {
+            unsafe
+            {
+                MediaType mediaTypeOut;
+                IntPtr mediaTypeOut_ = IntPtr.Zero;
+                Result result = LocalInterop.Calliint(_nativePointer, dwStreamIndex, dwMediaTypeIndex, &mediaTypeOut_, ((void**)(*(void**)_nativePointer))[5]);
+                if (result == ResultCode.NoMoreTypes) return null;
+                mediaTypeOut = (mediaTypeOut_ == IntPtr.Zero) ? null : new MediaType(mediaTypeOut_);
+                result.CheckError();
+                return mediaTypeOut;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

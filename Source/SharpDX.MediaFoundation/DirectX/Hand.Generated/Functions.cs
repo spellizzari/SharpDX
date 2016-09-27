@@ -155,8 +155,38 @@ namespace SharpDX.MediaFoundation.DirectX {
                 __result__.CheckError();
             }
         }
+
+        /// <summary>	
+        /// <p>Creates a Microsoft DirectX Video Acceleration High Definition (DXVA-HD) device.</p>	
+        /// </summary>	
+        /// <param name="d3DDeviceRef"><dd> <p>A reference to the <strong><see cref="SharpDX.Direct3D9.DeviceEx"/></strong> interface of a Direct3D 9 device.</p> </dd></param>	
+        /// <param name="contentDescRef"><dd> <p>A reference to a <strong><see cref="SharpDX.MediaFoundation.DirectX.ContentDescription"/></strong> structure that describes the video content. The driver uses this information as a hint when it creates the device.</p> </dd></param>	
+        /// <param name="usage"><dd> <p>A member of the <strong><see cref="SharpDX.MediaFoundation.DirectX.DeviceUsage"/></strong> enumeration, describing how the device will be used. The value indicates the desired trade-off between speed and video quality. The driver uses this flag as a hint when it creates the device.</p> </dd></param>	
+        /// <param name="pluginRef"><dd> <p>A reference to an initialization function for a software device. Set this reference if you are using a software plug-in device. Otherwise, set this parameter to <strong><c>null</c></strong>. If the value is <strong><c>null</c></strong>, the driver creates the DXVA-HD device.</p> <p>The function reference type is <strong>PDXVAHDSW_Plugin</strong>.</p> </dd></param>	
+        /// <param name="deviceOut"><dd> <p>Receives a reference to the <strong><see cref="SharpDX.MediaFoundation.DirectX.HDDevice"/></strong> interface. The caller must release the interface.</p> </dd></param>	
+        /// <returns><p>The method returns an <strong><see cref="SharpDX.Result"/></strong>. Possible values include, but are not limited to, those in the following table.</p><table> <tr><th>Return code</th><th>Description</th></tr> <tr><td> <dl> <dt><strong><see cref="SharpDX.Result.Ok"/></strong></dt> </dl> </td><td> <p>The method succeeded.</p> </td></tr> <tr><td> <dl> <dt><strong>E_NOINTERFACE</strong></dt> </dl> </td><td> <p>The Direct3D device does not support DXVA-HD.</p> </td></tr> </table><p>?</p></returns>	
+        /// <remarks>	
+        /// <p> Use the <strong><see cref="SharpDX.MediaFoundation.DirectX.HDDevice"/></strong> interface to get the device capabilities, create the video processor, and allocate video surfaces. </p>	
+        /// </remarks>	
+        /// <include file='..\..\Documentation\CodeComments.xml' path="/comments/comment[@id='DXVAHD_CreateDevice']/*"/>	
+        /// <msdn-id>dd318412</msdn-id>	
+        /// <unmanaged>HRESULT DXVAHD_CreateDevice([In] IDirect3DDevice9Ex* pD3DDevice,[In] const DXVAHD_CONTENT_DESC* pContentDesc,[In] DXVAHD_DEVICE_USAGE Usage,[In, Optional] __function__stdcall* pPlugin,[Out, Fast] IDXVAHD_Device** ppDevice)</unmanaged>	
+        /// <unmanaged-short>DXVAHD_CreateDevice</unmanaged-short>	
+        public static Result TryCreateDevice(SharpDX.Direct3D9.DeviceEx d3DDeviceRef, ref SharpDX.MediaFoundation.DirectX.ContentDescription contentDescRef, SharpDX.MediaFoundation.DirectX.DeviceUsage usage, SharpDX.FunctionCallback pluginRef, SharpDX.MediaFoundation.DirectX.HDDevice deviceOut)
+        {
+            unsafe
+            {
+                IntPtr deviceOut_ = IntPtr.Zero;
+                SharpDX.Result __result__;
+                fixed (void* contentDescRef_ = &contentDescRef)
+                    __result__ =
+                    DXVAHD_CreateDevice_((void*)((d3DDeviceRef == null) ? IntPtr.Zero : d3DDeviceRef.NativePointer), contentDescRef_, unchecked((int)usage), pluginRef, &deviceOut_);
+                ((SharpDX.MediaFoundation.DirectX.HDDevice)deviceOut).NativePointer = deviceOut_;
+                return __result__;
+            }
+        }
 #if !W8CORE
-		//[System.Security.SuppressUnmanagedCodeSecurityAttribute]
+        //[System.Security.SuppressUnmanagedCodeSecurityAttribute]
 #endif
 #if WP8
         private unsafe delegate int DXVAHD_CreateDeviceDelegate(void* arg0,void* arg1,int arg2,void* arg3,void* arg4);

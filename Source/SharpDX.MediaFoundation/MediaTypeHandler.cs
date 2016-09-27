@@ -61,7 +61,7 @@ namespace SharpDX.MediaFoundation
         /// <msdn-id>bb970492</msdn-id>	
         /// <unmanaged>HRESULT IMFMediaTypeHandler::GetCurrentMediaType([Out] IMFMediaType** ppMediaType)</unmanaged>	
         /// <unmanaged-short>IMFMediaTypeHandler::GetCurrentMediaType</unmanaged-short>	
-        public bool TryGetCurrentMediaType(out SharpDX.MediaFoundation.MediaType mediaTypeOut)
+        public Result TryGetCurrentMediaType(out SharpDX.MediaFoundation.MediaType mediaTypeOut)
         {
             unsafe
             {
@@ -69,12 +69,7 @@ namespace SharpDX.MediaFoundation
                 Result result;
                 result = LocalInterop.Calliint(_nativePointer, &mediaTypeOut_, ((void**)(*(void**)_nativePointer))[7]);
                 mediaTypeOut = (mediaTypeOut_ == IntPtr.Zero) ? null : new SharpDX.MediaFoundation.MediaType(mediaTypeOut_);
-                if (result.Success)
-                    return true;
-                if (result == ResultCode.NotInitializeD)
-                    return false;
-                result.CheckError();
-                return false;
+                return result;
             }
         }
 

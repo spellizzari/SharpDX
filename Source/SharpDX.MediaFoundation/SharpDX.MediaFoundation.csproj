@@ -26,7 +26,9 @@
     <Compile Include="ClockStateSink.cs" />
     <Compile Include="ClockStateSinkShadow.cs" />
     <Compile Include="MediaEventSink.cs" />
+    <Compile Include="MediaSession.cs" />
     <Compile Include="MediaTypeHandler.cs" />
+    <Compile Include="PresentationClock.cs" />
     <Compile Include="PresentationDescriptor.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="SampleGrabberSinkCallbackShadow2.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="VideoFormatGuids.cs" />
     <Compile Include="VideoPresenter.cs" />
     <Compile Include="VideoPresenterShadow.cs" />
+    <Compile Include="VideoProcessor.cs" />
     <Compile Include="VideoRenderer.cs" />
     <Compile Include="WorkQueueId.cs" />
   </ItemGroup>

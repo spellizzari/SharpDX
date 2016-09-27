@@ -23,6 +23,7 @@ namespace SharpDX.MediaFoundation
     public static partial class MediaManager
     {
         private static bool isStartup;
+        private static object critSec = new object();
 
         /// <summary>
         ///   <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p>Initializes Microsoft Media Foundation.</p>
@@ -39,10 +40,13 @@ namespace SharpDX.MediaFoundation
         /// </remarks>
         public static void Startup(bool useLightVersion = false)
         {
-            if (isStartup)
-                return;
-            MediaFactory.Startup(MediaFactory.Version, useLightVersion ? 1 : 0);
-            isStartup = true;
+            lock (critSec)
+            {
+                if (isStartup)
+                    return;
+                MediaFactory.Startup(MediaFactory.Version, useLightVersion ? 1 : 0);
+                isStartup = true;
+            }
         }
 
         /// <summary>	
@@ -57,10 +61,13 @@ namespace SharpDX.MediaFoundation
         /// <unmanaged-short>MFShutdown</unmanaged-short>	
         public static void Shutdown()
         {
-            if (isStartup)
+            lock (critSec)
             {
-                MediaFactory.Shutdown();
-                isStartup = false;
+                if (isStartup)
+                {
+                    MediaFactory.Shutdown();
+                    isStartup = false;
+                }
             }
         }
     }
