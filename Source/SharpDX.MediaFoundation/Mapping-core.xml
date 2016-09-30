@@ -785,6 +785,8 @@
     <map interface="IMFAsyncCallback" name="IAsyncCallback" callback="true"/>
     <map interface="IMFSourceReaderCallback" name="ISourceReaderCallback" callback="true"/>
     <map interface="IMFSourceReaderCallback2" name="ISourceReaderCallback2" callback="true"/>
+    <map interface="IMFSinkWriterCallback" name="ISinkWriterCallback" callback="true"/>
+    <map interface="IMFSinkWriterCallback2" name="ISinkWriterCallback2" callback="true"/>
 
     <map interface="IMFAsyncCallbackLogging" name="IAsyncCallbackLogging" callback="true"/>
 

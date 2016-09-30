@@ -20,29 +20,29 @@
 
 namespace SharpDX.MediaFoundation
 {
-    [Shadow(typeof(SourceReaderCallbackShadow))]
-    public partial interface ISourceReaderCallback2 : ISourceReaderCallback
+    [Shadow(typeof(SinkWriterCallbackShadow))]
+    public partial interface ISinkWriterCallback2 : ISinkWriterCallback
     {
         /// <summary>	
         /// <p>[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.]</p><p>Called when the transform chain in the <strong><see cref="SharpDX.MediaFoundation.SourceReader"/></strong> is built or modified.</p>	
         /// </summary>	
-        /// <returns><p>Returns an <strong><see cref="SharpDX.Result"/></strong> value. Currently, the source reader ignores the return value.</p></returns>	
-        /// <include file='.\..\Documentation\CodeComments.xml' path="/comments/comment[@id='IMFSourceReaderCallback2::OnTransformChange']/*"/>	
-        /// <msdn-id>dn949420</msdn-id>	
-        /// <unmanaged>HRESULT IMFSourceReaderCallback2::OnTransformChange()</unmanaged>	
-        /// <unmanaged-short>IMFSourceReaderCallback2::OnTransformChange</unmanaged-short>	
+        /// <returns><p>Returns an <strong><see cref="SharpDX.Result"/></strong> value. Currently, the sink writer ignores the return value.</p></returns>	
+        /// <include file='.\..\Documentation\CodeComments.xml' path="/comments/comment[@id='IMFSinkWriterCallback2::OnTransformChange']/*"/>	
+        /// <msdn-id>dn949417</msdn-id>	
+        /// <unmanaged>HRESULT IMFSinkWriterCallback2::OnTransformChange()</unmanaged>	
+        /// <unmanaged-short>IMFSinkWriterCallback2::OnTransformChange</unmanaged-short>	
         void OnTransformChange();
 
         /// <summary>	
-        /// <p>[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.]</p><p>Called when an asynchronous error occurs with the <strong><see cref="SharpDX.MediaFoundation.SourceReader"/></strong>.</p>	
+        /// <p>[Some information relates to pre-released product which may be substantially modified before it's commercially released. Microsoft makes no warranties, express or implied, with respect to the information provided here.]</p><p>Called when an asynchronous error occurs with the <strong><see cref="SharpDX.MediaFoundation.SinkWriter"/></strong>.</p>	
         /// </summary>	
         /// <param name="dwStreamIndex">No documentation.</param>	
         /// <param name="hrStatus">No documentation.</param>	
-        /// <returns><p>Returns an <strong><see cref="SharpDX.Result"/></strong> value. Currently, the source reader ignores the return value.</p></returns>	
-        /// <include file='.\..\Documentation\CodeComments.xml' path="/comments/comment[@id='IMFSourceReaderCallback2::OnStreamError']/*"/>	
-        /// <msdn-id>dn949419</msdn-id>	
-        /// <unmanaged>HRESULT IMFSourceReaderCallback2::OnStreamError([In] unsigned int dwStreamIndex,[In] HRESULT hrStatus)</unmanaged>	
-        /// <unmanaged-short>IMFSourceReaderCallback2::OnStreamError</unmanaged-short>	
-        void OnStreamError(int dwStreamIndex, Result hrStatus);
+        /// <returns><p>Returns an <strong><see cref="SharpDX.Result"/></strong> value. Currently, the sink writer ignores the return value.</p></returns>	
+        /// <include file='.\..\Documentation\CodeComments.xml' path="/comments/comment[@id='IMFSinkWriterCallback2::OnStreamError']/*"/>	
+        /// <msdn-id>dn949416</msdn-id>	
+        /// <unmanaged>HRESULT IMFSinkWriterCallback2::OnStreamError([In] unsigned int dwStreamIndex,[In] HRESULT hrStatus)</unmanaged>	
+        /// <unmanaged-short>IMFSinkWriterCallback2::OnStreamError</unmanaged-short>	
+        void OnStreamError(int dwStreamIndex, SharpDX.Result hrStatus);
     }
 }

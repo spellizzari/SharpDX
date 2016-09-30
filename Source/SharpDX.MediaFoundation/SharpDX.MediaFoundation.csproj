@@ -18,10 +18,14 @@
     </Compile>
     <Compile Include="Activate.cs" />
     <Compile Include="AssemblyDoc.cs" />
+    <Compile Include="ISinkWriterCallback2.cs" />
+    <Compile Include="ISinkWriterCallback.cs" />
+    <Compile Include="SinkWriterCallbackBase.cs" />
     <Compile Include="SourceReaderCallbackBase.cs" />
     <Compile Include="AsyncCallbackBase.cs" />
     <Compile Include="ISourceReaderCallback2.cs" />
     <Compile Include="ISourceReaderCallback.cs" />
+    <Compile Include="SinkWriterCallbackShadow.cs" />
     <Compile Include="SourceReaderCallbackShadow.cs" />
     <Compile Include="AudioDecoder.cs" />
     <Compile Include="ByteStream.cs" />
