@@ -783,6 +783,8 @@
     <map interface="IMFByteStream" name="IByteStream" callback-visibility="public" callback="true" callback-dual="true" callback-name="ByteStream"/>
 
     <map interface="IMFAsyncCallback" name="IAsyncCallback" callback="true"/>
+    <map interface="IMFSourceReaderCallback" name="ISourceReaderCallback" callback="true"/>
+    <map interface="IMFSourceReaderCallback2" name="ISourceReaderCallback2" callback="true"/>
 
     <map interface="IMFAsyncCallbackLogging" name="IAsyncCallbackLogging" callback="true"/>
 
