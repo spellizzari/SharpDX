@@ -51,7 +51,10 @@ namespace SharpDX
 
         protected virtual int ReleaseImpl(IntPtr thisObject)
         {
-            return Interlocked.Decrement(ref count);
+            var newCount = Interlocked.Decrement(ref count);
+            if (newCount == 0)
+                Dispose();
+            return newCount;
         }
 
         internal class ComObjectVtbl : CppObjectVtbl
