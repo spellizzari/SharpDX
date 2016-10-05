@@ -334,6 +334,58 @@ namespace SharpDX.MediaFoundation
         }
 
         /// <summary>	
+        /// <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p>Queries the underlying media source or decoder for an interface.</p>	
+        /// </summary>	
+        /// <param name="dwStreamIndex"><dd> <p>The stream or object to query. If the value is <strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.Mediasource"/></strong>, the method queries the media source. Otherwise, it queries the decoder that is associated with the specified stream. The following values are possible.</p> <table> <tr><th>Value</th><th>Meaning</th></tr> <tr><td> <dl> <dt>0?0xFFFFFFFB</dt> </dl> </td><td> <p>The zero-based index of a stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstVideoStream"/></strong></strong></dt> <dt>0xFFFFFFFC</dt> </dl> </td><td> <p>The first video stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstAudioStream"/></strong></strong></dt> <dt>0xFFFFFFFD</dt> </dl> </td><td> <p>The first audio stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.Mediasource"/></strong></strong></dt> <dt>0xFFFFFFFF</dt> </dl> </td><td> <p>The media source.</p> </td></tr> </table> <p>?</p> </dd></param>	
+        /// <param name="guidService"><dd> <p>A service identifier <see cref="System.Guid"/>.  If the value is <strong>GUID_NULL</strong>, the method calls <strong>QueryInterface</strong> to get the requested interface. Otherwise, the method calls the <strong><see cref="SharpDX.MediaFoundation.ServiceProvider.GetService"/></strong> method. For a list of service identifiers, see Service Interfaces.</p> </dd></param>	
+        /// <param name="riid"><dd> <p>The interface identifier (IID) of the interface being requested. </p> </dd></param>	
+        /// <returns><dd> <p>Receives a reference to the requested interface. The caller must release the interface.</p> </dd></returns>	
+        /// <remarks>	
+        /// <p>This interface is available on Windows?Vista if Platform Update Supplement for Windows?Vista is installed.</p>	
+        /// </remarks>	
+        /// <msdn-id>dd374663</msdn-id>	
+        /// <unmanaged>HRESULT IMFSourceReader::GetServiceForStream([In] unsigned int dwStreamIndex,[In] const GUID&amp; guidService,[In] const GUID&amp; riid,[Out] void** ppvObject)</unmanaged>	
+        /// <unmanaged-short>IMFSourceReader::GetServiceForStream</unmanaged-short>	
+        public Result TryGetServiceForStream<T>(int dwStreamIndex, System.Guid guidService, out T obj)
+            where T : ComObject
+        {
+            unsafe
+            {
+                var riid = Utilities.GetGuidFromType(typeof(T));
+                IntPtr vObjectOut;
+                Result result = LocalInterop.Calliint(_nativePointer, dwStreamIndex, &guidService, &riid, &vObjectOut, ((void**)(*(void**)_nativePointer))[11]);
+                obj = vObjectOut == IntPtr.Zero ? null : CppObject.FromPointer<T>(vObjectOut);
+                return result;
+            }
+        }
+
+        /// <summary>	
+        /// <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p>Queries the underlying media source or decoder for an interface.</p>	
+        /// </summary>	
+        /// <param name="dwStreamIndex"><dd> <p>The stream or object to query. If the value is <strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.Mediasource"/></strong>, the method queries the media source. Otherwise, it queries the decoder that is associated with the specified stream. The following values are possible.</p> <table> <tr><th>Value</th><th>Meaning</th></tr> <tr><td> <dl> <dt>0?0xFFFFFFFB</dt> </dl> </td><td> <p>The zero-based index of a stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstVideoStream"/></strong></strong></dt> <dt>0xFFFFFFFC</dt> </dl> </td><td> <p>The first video stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstAudioStream"/></strong></strong></dt> <dt>0xFFFFFFFD</dt> </dl> </td><td> <p>The first audio stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.Mediasource"/></strong></strong></dt> <dt>0xFFFFFFFF</dt> </dl> </td><td> <p>The media source.</p> </td></tr> </table> <p>?</p> </dd></param>	
+        /// <param name="guidService"><dd> <p>A service identifier <see cref="System.Guid"/>.  If the value is <strong>GUID_NULL</strong>, the method calls <strong>QueryInterface</strong> to get the requested interface. Otherwise, the method calls the <strong><see cref="SharpDX.MediaFoundation.ServiceProvider.GetService"/></strong> method. For a list of service identifiers, see Service Interfaces.</p> </dd></param>	
+        /// <param name="riid"><dd> <p>The interface identifier (IID) of the interface being requested. </p> </dd></param>	
+        /// <returns><dd> <p>Receives a reference to the requested interface. The caller must release the interface.</p> </dd></returns>	
+        /// <remarks>	
+        /// <p>This interface is available on Windows?Vista if Platform Update Supplement for Windows?Vista is installed.</p>	
+        /// </remarks>	
+        /// <msdn-id>dd374663</msdn-id>	
+        /// <unmanaged>HRESULT IMFSourceReader::GetServiceForStream([In] unsigned int dwStreamIndex,[In] const GUID&amp; guidService,[In] const GUID&amp; riid,[Out] void** ppvObject)</unmanaged>	
+        /// <unmanaged-short>IMFSourceReader::GetServiceForStream</unmanaged-short>	
+        public Result TryGetServiceForStream<T>(SourceReaderIndex dwStreamIndex, System.Guid guidService, out T obj)
+            where T : ComObject
+        {
+            unsafe
+            {
+                var riid = Utilities.GetGuidFromType(typeof(T));
+                IntPtr vObjectOut;
+                Result result = LocalInterop.Calliint(_nativePointer, (int)dwStreamIndex, &guidService, &riid, &vObjectOut, ((void**)(*(void**)_nativePointer))[11]);
+                obj = vObjectOut == IntPtr.Zero ? null : CppObject.FromPointer<T>(vObjectOut);
+                return result;
+            }
+        }
+
+        /// <summary>	
         /// <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p>Gets an attribute from the underlying media source.</p>	
         /// </summary>	
         /// <param name="dwStreamIndex"><dd> <p>The stream or object to query. The value can be any of the following.</p> <table> <tr><th>Value</th><th>Meaning</th></tr> <tr><td> <dl> <dt>0?0xFFFFFFFB</dt> </dl> </td><td> <p>The zero-based index of a stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstVideoStream"/></strong></strong></dt> <dt>0xFFFFFFFC</dt> </dl> </td><td> <p>The first video stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.FirstAudioStream"/></strong></strong></dt> <dt>0xFFFFFFFD</dt> </dl> </td><td> <p>The first audio stream.</p> </td></tr> <tr><td><dl> <dt><strong><strong><see cref="SharpDX.MediaFoundation.SourceReaderIndex.Mediasource"/></strong></strong></dt> <dt>0xFFFFFFFF</dt> </dl> </td><td> <p>The media source.</p> </td></tr> </table> <p>?</p> </dd></param>	
