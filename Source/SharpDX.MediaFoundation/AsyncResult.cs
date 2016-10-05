@@ -121,5 +121,14 @@ namespace SharpDX.MediaFoundation
                 return privateObject;
             }
         }
+
+        private Result GetState(out IntPtr unkStateOut)
+        {
+            unsafe
+            {
+                fixed (void* unkStateOut_ = &unkStateOut)
+                    return LocalInterop.Calliint(_nativePointer, unkStateOut_, ((void**)(*(void**)_nativePointer))[3]);
+            }
+        }
     }
 }
