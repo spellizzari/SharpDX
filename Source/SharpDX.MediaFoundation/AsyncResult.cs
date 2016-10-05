@@ -48,7 +48,8 @@ namespace SharpDX.MediaFoundation
                 if (!isStateVerified)
                 {
                     IntPtr statePtr;
-                    GetState(out statePtr);
+                    var hr = GetState(out statePtr);
+                    if (!hr.Success && hr != Result.InvalidPointer) hr.CheckError();
                     if (statePtr != IntPtr.Zero)
                     {
                         state = Marshal.GetObjectForIUnknown(statePtr);
@@ -77,7 +78,8 @@ namespace SharpDX.MediaFoundation
                 if (isStateVerified) throw new InvalidOperationException();
                 if (!isStatePointerVerified)
                 {
-                    GetState(out statePointer);
+                    var hr = GetState(out statePointer);
+                    if (!hr.Success && hr != Result.InvalidPointer) hr.CheckError();
                     isStatePointerVerified = true;
                 }
                 return statePointer;

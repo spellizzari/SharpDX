@@ -803,6 +803,7 @@
 
     <map param="IMFMediaEngineEx::SetSourceFromByteStream::pURL" type="void"/>
 
+    <map method="IMFAsyncResult::GetState" return="true" check="false"/>
     <map method="IMFAsyncResult::GetStatus" return="true" check="false"/>
 
     <map method="IMFMediaError::GetExtendedErrorCode" check="false"/>
