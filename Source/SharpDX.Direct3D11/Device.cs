@@ -190,15 +190,6 @@ namespace SharpDX.Direct3D11
             {
                 swapChain = new SwapChain(factory, device, swapChainDescription);
             }
-
-            var context = device.ImmediateContext;
-
-            if (context != null)
-            {
-                context.Device__ = device;
-            }
-
-            device.ImmediateContext__ = context;
         }
 
         /// <summary>
@@ -405,6 +396,22 @@ namespace SharpDX.Direct3D11
                 var support = default(FeatureDataD3D11Options3);
                 if (CheckFeatureSupport(Feature.D3D11Options3, new IntPtr(&support), Utilities.SizeOf<FeatureDataD3D11Options3>()).Failure)
                     return default(FeatureDataD3D11Options3);
+                return support;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves additional information about Direct3D11.3 feature options in the current graphics driver
+        /// </summary>
+        /// <msdn-id>dn933226</msdn-id>
+        /// <returns>Returns a structure <see cref="FeatureDataD3D11Options4"/> </returns>	
+        public FeatureDataD3D11Options4 CheckD3D113Features4()
+        {
+            unsafe
+            {
+                var support = default(FeatureDataD3D11Options4);
+                if (CheckFeatureSupport(Feature.D3D11Options4, new IntPtr(&support), Utilities.SizeOf<FeatureDataD3D11Options4>()).Failure)
+                    return default(FeatureDataD3D11Options4);
                 return support;
             }
         }

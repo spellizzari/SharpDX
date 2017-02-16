@@ -84,6 +84,7 @@
     <bind from="D2D_POINT_2U" to="SharpDX.Mathematics.Interop.RawPoint" />
     <bind from="D2D_COLOR_F" to="SharpDX.Mathematics.Interop.RawColor4" />
     <bind from="D2D_MATRIX_3X2_F" to="SharpDX.Mathematics.Interop.RawMatrix3x2" />
+    <bind from="D2D_MATRIX_4X3_F" to="SharpDX.Mathematics.Interop.RawMatrix4x3" />
     <bind from="D2D_MATRIX_4X4_F" to="SharpDX.Mathematics.Interop.RawMatrix" />
     <bind from="D2D_MATRIX_5X4_F" to="SharpDX.Mathematics.Interop.RawMatrix5x4" />
     <bind from="IPrintDocumentPackageTarget" to="SharpDX.ComObject" />
@@ -366,6 +367,8 @@
     <map param="ID2D(\d+)RenderTarget::CreateCompatibleRenderTarget::bitmapRenderTarget" attribute="out fast"/>
     <map param="ID2D(\d+)RenderTarget::CreateLayer::layer" attribute="out fast"/>
     <map param="ID2D(\d+)RenderTarget::CreateMesh::mesh" attribute="out fast"/>
+
+    <map method="ID2D(\d+)RenderTarget::EndDraw" hresult="true" check="false" visibility="public" name="TryEndDraw"/>
 
     <map param="ID2D(\d+)RenderTarget::CreateSharedBitmap::data" attribute="in" />
     <map method="ID2D1RenderTarget::DrawTextA" visibility="internal" name="DrawText" />
