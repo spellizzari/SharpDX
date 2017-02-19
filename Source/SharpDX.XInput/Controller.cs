@@ -117,11 +117,33 @@ namespace SharpDX.XInput
         /// <summary>
         /// Gets the state.
         /// </summary>
+        /// <returns>The state of this controller.</returns>
+        public State GetStateEx()
+        {
+            State temp;
+            var result = ErrorCodeHelper.ToResult(xinput.XInputGetStateEx((int)userIndex, out temp));
+            result.CheckError();
+            return temp;
+        }
+
+        /// <summary>
+        /// Gets the state.
+        /// </summary>
         /// <param name="state">The state of this controller.</param>
         /// <returns><c>true</c> if the controller is connected, <c>false</c> otherwise.</returns>
         public bool GetState(out State state)
         {
             return xinput.XInputGetState((int)userIndex, out state) == 0;
+        }
+
+        /// <summary>
+        /// Gets the state.
+        /// </summary>
+        /// <param name="state">The state of this controller.</param>
+        /// <returns><c>true</c> if the controller is connected, <c>false</c> otherwise.</returns>
+        public bool GetStateEx(out State state)
+        {
+            return xinput.XInputGetStateEx((int)userIndex, out state) == 0;
         }
 
         /// <summary>

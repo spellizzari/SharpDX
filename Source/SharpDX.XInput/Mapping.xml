@@ -34,6 +34,8 @@
       #define XUSER_INDEX_TWO 1
       #define XUSER_INDEX_THREE 2
       #define XUSER_INDEX_FOUR 3
+      
+      #define XINPUT_GAMEPAD_GUIDE 0x0400
     </post>
   </include>
 

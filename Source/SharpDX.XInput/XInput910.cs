@@ -36,6 +36,11 @@ namespace SharpDX.XInput
             return Native.XInputGetState(dwUserIndex, out stateRef);
         }
 
+        public int XInputGetStateEx(int dwUserIndex, out State stateRef)
+        {
+            return Native.XInputGetState(dwUserIndex, out stateRef);
+        }
+
         public int XInputGetAudioDeviceIds(int dwUserIndex, IntPtr renderDeviceIdRef, IntPtr renderCountRef, IntPtr captureDeviceIdRef, IntPtr captureCountRef)
         {
             throw new NotSupportedException("Method not supported on XInput9.1.0");

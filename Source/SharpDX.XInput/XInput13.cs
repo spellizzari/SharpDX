@@ -41,6 +41,11 @@ namespace SharpDX.XInput
             return Native.XInputGetState(dwUserIndex, out stateRef);
         }
 
+        public int XInputGetStateEx(int dwUserIndex, out State stateRef)
+        {
+            return Native.XInputGetStateEx(dwUserIndex, out stateRef);
+        }
+
         public int XInputGetAudioDeviceIds(int dwUserIndex, IntPtr renderDeviceIdRef, IntPtr renderCountRef, IntPtr captureDeviceIdRef, IntPtr captureCountRef)
         {
             throw new NotSupportedException("Method not supported on XInput1.3");
@@ -84,6 +89,9 @@ namespace SharpDX.XInput
 
             [DllImport("xinput1_3.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "XInputGetState")]
             public static extern int XInputGetState(int dwUserIndex, out State stateRef);
+
+            [DllImport("xinput1_3.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "#100")]
+            public static extern int XInputGetStateEx(int dwUserIndex, out State stateRef);
 
             [DllImport("xinput1_3.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "XInputEnable")]
             public static extern void XInputEnable(RawBool arg0);

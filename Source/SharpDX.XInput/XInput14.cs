@@ -20,6 +20,7 @@
 
 using System;
 using SharpDX.Mathematics.Interop;
+using System.Runtime.InteropServices;
 
 namespace SharpDX.XInput
 {
@@ -33,6 +34,11 @@ namespace SharpDX.XInput
         public int XInputGetState(int dwUserIndex, out State stateRef)
         {
             return XInput.XInputGetState(dwUserIndex, out stateRef);
+        }
+
+        public int XInputGetStateEx(int dwUserIndex, out State stateRef)
+        {
+            return Native.XInputGetStateEx(dwUserIndex, out stateRef);
         }
 
         public int XInputGetAudioDeviceIds(int dwUserIndex, IntPtr renderDeviceIdRef, IntPtr renderCountRef, IntPtr captureDeviceIdRef, IntPtr captureCountRef)
@@ -58,6 +64,12 @@ namespace SharpDX.XInput
         public int XInputGetCapabilities(int dwUserIndex, DeviceQueryType dwFlags, out Capabilities capabilitiesRef)
         {
             return XInput.XInputGetCapabilities(dwUserIndex, dwFlags, out capabilitiesRef);
+        }
+
+        private static class Native
+        {
+            [DllImport("xinput1_4.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "#100")]
+            public static extern int XInputGetStateEx(int dwUserIndex, out State stateRef);
         }
     }
 }

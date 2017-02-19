@@ -27,6 +27,7 @@ namespace SharpDX.XInput
     {
         int XInputSetState(int dwUserIndex, SharpDX.XInput.Vibration vibrationRef);
         int XInputGetState(int dwUserIndex, out SharpDX.XInput.State stateRef);
+        int XInputGetStateEx(int dwUserIndex, out SharpDX.XInput.State stateRef);
         int XInputGetAudioDeviceIds(int dwUserIndex,
             System.IntPtr renderDeviceIdRef,
             System.IntPtr renderCountRef,
